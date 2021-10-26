@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.0)
+project(SimpleHttpServer)
+add_definitions(-DUSE_STANDALONE_ASIO)
+add_definitions(-DASIO_STANDALONE)
+include_directories(./include/asio_net/)
+include_directories(./include/json11/)
+SET(HTTP_SERVER_SOURCE ./crypto.hpp ./server_http.hpp ./status_code.hpp ./utility.hpp ./http_examples.cpp)
+add_executable(HttpServer ${HTTP_SERVER_SOURCE})
