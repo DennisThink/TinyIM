@@ -1,0 +1,10 @@
+{
+	"pdf": {
+		"fontSize": 16,
+		"margin":{
+			"left":20,
+			"right":20
+		},
+		"paperSize":"a4"
+	}
+}
