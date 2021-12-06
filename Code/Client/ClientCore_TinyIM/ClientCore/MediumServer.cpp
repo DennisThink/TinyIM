@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
 	theApp.m_loger=logger;
 	theApp.m_loger->set_level(spdlog::level::debug);
     ClientCore::CClientSess::ms_loger = theApp.m_loger;
-	ClientCore::CServerSess::ms_loger = theApp.m_loger;
+	//ClientCore::CServerSess::ms_loger = theApp.m_loger;
 	ClientCore::CMediumServer::ms_loger = theApp.m_loger;
 	//ChatServer::CClientSessManager::ms_loger = theApp.m_loger;
 

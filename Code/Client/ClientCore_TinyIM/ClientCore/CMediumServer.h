@@ -64,7 +64,7 @@ class CMediumServer : public std::enable_shared_from_this<CMediumServer>
 
 	std::shared_ptr<ClientCore::CClientHttpServer> m_httpServer;
 	CClientSess_SHARED_PTR m_freeClientSess;
-	CMsgPersistentUtil_SHARED_PTR m_msgPersisUtil;
+	std::shared_ptr<CMsgDbInterface> m_msgPersisUtil;
     void SetTimer(int nSeconds);
     void OnTimer();
 
@@ -92,7 +92,7 @@ class CMediumServer : public std::enable_shared_from_this<CMediumServer>
     void CheckAllConnect();
 
 	CClientSess_SHARED_PTR GetClientSess(const std::string strUserName);
-	CMsgPersistentUtil_SHARED_PTR GetMsgPersisUtil() {
+	std::shared_ptr<CMsgDbInterface> GetMsgPersisUtil() {
 		return m_msgPersisUtil;
 	}
     CMediumServer(asio::io_service &io_service)
@@ -108,7 +108,6 @@ class CMediumServer : public std::enable_shared_from_this<CMediumServer>
     }
 
 	void start(const std::function<void(const std::error_code &)> &callback);
-
     void loadConfig(const json11::Json &cfg, std::error_code &ec);
     //获取server的ip和端口,
     std::string getServerIpPort();

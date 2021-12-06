@@ -12,20 +12,14 @@
 #ifndef _DENNIS_THINK_C_MSG_PERSISTENT_UTIL_H_
 #define _DENNIS_THINK_C_MSG_PERSISTENT_UTIL_H_
 #include <memory>
-#include "CommonMsg.h"
 #include "SQLiteCpp/SQLiteCpp.h"
 #include "SQLiteCpp/VariadicBind.h"
-#include "Log.h"
-
-class CMsgPersistentUtil: public std::enable_shared_from_this<CMsgPersistentUtil>
+#include "CMsgDBInterface.h"
+class CMsgPersistentUtil:public CMsgDbInterface
 {
 public:
-	bool InitDataBase();
-	static std::shared_ptr<spdlog::logger> ms_logger;
 
 private:
-
-	
 	SQLite::Database*    m_pDb;    ///< Database connection
 	//FriendChat Msg
 	SQLite::Statement*   m_pFriendChatCreate; ///< Database prepared SQL query
@@ -40,5 +34,4 @@ private:
 	SQLite::Statement*   m_pGroupChatUpdate; ///< Database prepared SQL query
 
 };
-using CMsgPersistentUtil_SHARED_PTR = std::shared_ptr<CMsgPersistentUtil>;
 #endif

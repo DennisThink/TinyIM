@@ -1,4 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(TinyIM)
+include_directories(./include/thirdparty/)
+include_directories(./include/thirdparty/asio/)
+include_directories(./include/thirdparty/mysql/)
+include_directories(./include/common/)
 add_subdirectory(Server/ChatServer)
 add_subdirectory(Client/ClientCore_TinyIM/ClientCore)

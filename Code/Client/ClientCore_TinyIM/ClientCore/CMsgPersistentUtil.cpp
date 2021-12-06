@@ -18,8 +18,7 @@
  * @return true 
  * @return false 
  */
-
-std::shared_ptr<spdlog::logger> CMsgPersistentUtil::ms_logger=nullptr;
+/*
 bool CMsgPersistentUtil::InitDataBase()
 {
 	if (nullptr == ms_logger)
@@ -79,4 +78,4 @@ bool CMsgPersistentUtil::InitDataBase()
 
 
 	return true;
-}
+}*/

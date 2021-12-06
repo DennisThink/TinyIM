@@ -1,10 +1,10 @@
 ﻿#include "CFileUtil.h"
 #include <fstream>
 #include <stdio.h>
-#include  <io.h>
+//#include  <io.h>
 #include  <stdio.h>
 #include  <stdlib.h>
-#include<direct.h>
+//#include  <direct.h>
 
 /**
  * @brief 获取文件的大小
@@ -17,7 +17,8 @@
 bool CFileUtil::GetFileSize(int& nFileSize, const std::string strFileName)
 {
 	FILE * pFile;
-	fopen_s(&pFile,strFileName.c_str(), "r");
+	return false;
+	/*fopen_s(&pFile,strFileName.c_str(), "r");
 	if (nullptr != pFile) {
 		fseek(pFile, 0L, SEEK_END);
 		nFileSize = ftell(pFile);
@@ -26,7 +27,7 @@ bool CFileUtil::GetFileSize(int& nFileSize, const std::string strFileName)
 	}
 	else {
 		return false;
-	}
+	}*/
 }
 
 /**
@@ -45,14 +46,15 @@ bool CFileUtil::OpenReadFile(const int nFileId, const std::string strFileName)
 	}
 
 	FILE * pFile;
-	fopen_s(&pFile,strFileName.c_str(), "r");
+	return false;
+	/*fopen_s(&pFile,strFileName.c_str(), "r");
 	if (nullptr != pFile) {
 		m_ReadFileMap.insert({ nFileId,pFile });
 		return true;
 	}
 	else {
 		return false;
-	}
+	}*/
 }
 
 
@@ -72,14 +74,15 @@ bool CFileUtil::OpenWriteFile(const int nFileId, const std::string strFileName)
 	}
 
 	FILE * pFile;
-	fopen_s(&pFile,strFileName.c_str(), "w");
+	return false;
+	/*fopen_s(&pFile,strFileName.c_str(), "w");
 	if (nullptr != pFile) {
 		m_WriteFileMap.insert({ nFileId,pFile });
 		return true;
 	}
 	else {
 		return false;
-	}
+	}*/
 }
 
 /**
@@ -169,10 +172,10 @@ bool CFileUtil::OnCloseFile(const int nFileId)
  */
 bool CFileUtil::IsFileExist(const std::string strFileName)
 {
-	if (_access(strFileName.c_str(), 0) == 0)
+	/*if (_access(strFileName.c_str(), 0) == 0)
 	{
 		return true;
-	}
+	}*/
 	return false;
 }
 
@@ -202,10 +205,10 @@ bool CFileUtil::RemoveFile(const std::string strFileName)
  */
 bool CFileUtil::IsFolder(const std::string strFolder)
 {
-	if (_access(strFolder.c_str(), 0) == 0)
+	/*if (_access(strFolder.c_str(), 0) == 0)
 	{
 		return true;
-	}
+	}*/
 	return false;
 }
 
@@ -218,14 +221,15 @@ bool CFileUtil::IsFolder(const std::string strFolder)
  */
 bool CFileUtil::CreateFolder(const std::string strFolder)
 {
-	if(_mkdir(strFolder.c_str())==0)
+	/*if(_mkdir(strFolder.c_str())==0)
 	{
 		return true;
 	}
 	else
 	{
 		return false;
-	}
+	}*/
+	return false;
 }
 
 
@@ -238,10 +242,10 @@ bool CFileUtil::CreateFolder(const std::string strFolder)
  */
 bool CFileUtil::RemoveFolder(const std::string strFolder)
 {
-	if(_rmdir(strFolder.c_str()) == 0)
+	/*if(_rmdir(strFolder.c_str()) == 0)
 	{
 		return true;
-	}
+	}*/
 	return false;
 }
 

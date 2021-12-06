@@ -16,7 +16,6 @@ include_directories(../include/thirdparty/SQLiteCpp/include/)
 include_directories(../include/thirdparty/SQLiteCpp/sqlite3/)
 include_directories(../include/common/)
 include_directories(../include/DaemonApp/)
-link_libraries(zlib)
 if(APPLE)
     include_directories(${PROJECT_SOURCE_DIR} "/usr/local/include" "/usr/local/ssl/include")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
@@ -45,8 +44,9 @@ set(SERVER_FILES
         ../include/DaemonApp/DaemonSvcApp.h 
         ../include/DaemonApp/DaemonSvcApp.cpp
 		./CHttpServer.h ./CHttpServer.cpp
-		#CMsgPersistentUtil.h CMsgPersistentUtil.cpp
-		#CFileUtil.h  CFileUtil.cpp
+		CMsgDBInterface.h CMsgDBInterface.cpp
+        CMsgPersistentUtil.h CMsgPersistentUtil.cpp
+		CFileUtil.h  CFileUtil.cpp
 		../../../msgStruct/CommonDef.cpp
 		../../../msgStruct/CommonMsg.cpp
         )
@@ -59,5 +59,5 @@ SET(SQLITE_CPP_SOURCE ../include/thirdparty/SQLiteCpp/sqlite3/sqlite3.c
 ../include/thirdparty/SQLiteCpp/src/Statement.cpp
 ../include/thirdparty/SQLiteCpp/src/Transaction.cpp)
 
-add_executable(ClientCore ${SERVER_FILES}  ${SQLITE_CPP_SOURCE})
+add_executable(ClientCore ${SERVER_FILES})
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../bin)  
