@@ -13,19 +13,26 @@
 #include "asio.hpp"
 #include "json11.hpp"
 #include <iostream>
-namespace ChatServer
+namespace ClientCore
 {
 std::shared_ptr<spdlog::logger> CClientSess::ms_loger;
 
-CClientSess::CClientSess(asio::io_service &ioService, std::string &strIp,
+/*CClientSess::CClientSess(asio::io_service &ioService, std::string &strIp,
 						 int port, CClientSessManager *queue)
 	: m_ioService(ioService), m_serverIp(strIp), m_serverPort(port),
 	  m_queue(queue), m_socket(ioService), m_bConnect(ST_NOT_CONNECT)
 {
 	m_connectInfo = m_serverIp + ":" + std::to_string(m_serverPort);
 	StartConnect();
-}
+}*/
 
+CClientSess::CClientSess(asio::io_service &ioService, std::string &strIp,
+						 int port)
+	: m_ioService(ioService), m_serverIp(strIp), m_serverPort(port), m_socket(ioService), m_bConnect(ST_NOT_CONNECT)
+{
+	m_connectInfo = m_serverIp + ":" + std::to_string(m_serverPort);
+	StartConnect();
+}
 /**
  * @brief 连接socket
  *

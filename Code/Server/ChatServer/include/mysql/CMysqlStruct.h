@@ -3,13 +3,13 @@
 #include <string>
 #include "CommonDef.h"
 const int MAX_USER_ID_LEN = 8;
-//ÓÃ»§µÄ×î»ù±¾µÄĞÅÏ¢£¬Ö»±£´æÓÃ»§ÃûºÍÃÜÂë
+//ç”¨æˆ·çš„æœ€åŸºæœ¬çš„ä¿¡æ¯ï¼Œåªä¿å­˜ç”¨æˆ·åå’Œå¯†ç 
 struct T_USER_BEAN
 {
-	std::string m_strF_USER_ID;//ÓÃ»§ID£¬8¸ö×Ö½Ú£¬ÓÉÏµÍ³·ÖÅä
-    std::string m_strF_USER_NAME;//ÓÃ»§Ãû³Æ
-    std::string m_strF_PASS_WORD;//ÓÃ»§ÃÜÂë
-	std::string m_strF_NICK_NAME;//ÓÃ»§êÇ³Æ
+	std::string m_strF_USER_ID;//ç”¨æˆ·IDï¼Œ8ä¸ªå­—èŠ‚ï¼Œç”±ç³»ç»Ÿåˆ†é…
+    std::string m_strF_USER_NAME;//ç”¨æˆ·åç§°
+    std::string m_strF_PASS_WORD;//ç”¨æˆ·å¯†ç 
+	std::string m_strF_NICK_NAME;//ç”¨æˆ·æ˜µç§°
 
 	bool IsValid()  const {
 		if (m_strF_USER_ID.length() > MAX_USER_ID_LEN ||
@@ -36,30 +36,30 @@ struct T_USER_BEAN
 	}
 };
 
-//ÓÃ»§µÄÆäËûĞÅÏ¢£¬²»±£´æÃÜÂë
+//ç”¨æˆ·çš„å…¶ä»–ä¿¡æ¯ï¼Œä¸ä¿å­˜å¯†ç 
 struct T_USER_INFO_BEAN
 {
-	std::string m_strF_USER_ID;//ÓÃ»§ID£¬8¸ö×Ö½Ú£¬ÓÉÏµÍ³·ÖÅä
-	std::string m_strF_USER_NAME;//ÓÃ»§Ãû
-	std::string m_strF_ADDRESS;//µØÖ·
-	std::string m_strF_BIRTH_DATE;//ÉúÈÕ
-	std::string m_strF_EMAIL_ADDR;//ÓÊÏä
-	std::string m_strF_NICK_NAME;//êÇ³Æ
-	std::string m_strF_SIGNATURE;//¸öĞÔÇ©Ãû
-	std::string m_strF_FACE_ID;//Í·Ïñ±àºÅ
+	std::string m_strF_USER_ID;//ç”¨æˆ·IDï¼Œ8ä¸ªå­—èŠ‚ï¼Œç”±ç³»ç»Ÿåˆ†é…
+	std::string m_strF_USER_NAME;//ç”¨æˆ·å
+	std::string m_strF_ADDRESS;//åœ°å€
+	std::string m_strF_BIRTH_DATE;//ç”Ÿæ—¥
+	std::string m_strF_EMAIL_ADDR;//é‚®ç®±
+	std::string m_strF_NICK_NAME;//æ˜µç§°
+	std::string m_strF_SIGNATURE;//ä¸ªæ€§ç­¾å
+	std::string m_strF_FACE_ID;//å¤´åƒç¼–å·
 	CLIENT_ONLINE_TYPE m_eOnlineState;
 };
 
-//ºÃÓÑÁÄÌìÏûÏ¢
+//å¥½å‹èŠå¤©æ¶ˆæ¯
 struct T_USER_CHAT_MSG 
 {
-	std::string m_strF_MSG_ID;//ÏûÏ¢ID
+	std::string m_strF_MSG_ID;//æ¶ˆæ¯ID
 	CHAT_MSG_TYPE m_eChatMsgType;
-	std::string m_strF_FROM_ID;//·¢ËÍ·½ID
-	std::string m_strF_TO_ID;//½ÓÊÕ·½ID
-	std::string m_strF_MSG_CONTEXT;//ÏûÏ¢ÄÚÈİ
+	std::string m_strF_FROM_ID;//å‘é€æ–¹ID
+	std::string m_strF_TO_ID;//æ¥æ”¶æ–¹ID
+	std::string m_strF_MSG_CONTEXT;//æ¶ˆæ¯å†…å®¹
 	std::string m_strF_OTHER_INFO;
-	std::string m_strF_READ_FLAG;//ÒÑ¶Á±êÊ¶(UNREAD  READ)
+	std::string m_strF_READ_FLAG;//å·²è¯»æ ‡è¯†(UNREAD  READ)
 	std::string m_strF_CREATE_TIME;
 	T_USER_CHAT_MSG() {
 		m_eChatMsgType = CHAT_MSG_TYPE::E_CHAT_UNKNOWN_TYPE;
@@ -69,22 +69,22 @@ struct T_USER_CHAT_MSG
 
 struct T_GROUP_CHAT_MSG
 {
-	std::string m_strF_MSG_ID;//ÏûÏ¢ID
+	std::string m_strF_MSG_ID;//æ¶ˆæ¯ID
 	CHAT_MSG_TYPE m_eChatMsgType;
-	std::string m_strF_SENDER_ID;//·¢ËÍÕßID
-	std::string m_strF_GROUP_ID;//Èº×éID
-	std::string m_strF_MSG_CONTEXT;//ÏûÏ¢ÄÚÈİ
-	std::string m_strF_OTHER_INFO;//ÆäËûµÄĞÅÏ¢
+	std::string m_strF_SENDER_ID;//å‘é€è€…ID
+	std::string m_strF_GROUP_ID;//ç¾¤ç»„ID
+	std::string m_strF_MSG_CONTEXT;//æ¶ˆæ¯å†…å®¹
+	std::string m_strF_OTHER_INFO;//å…¶ä»–çš„ä¿¡æ¯
 	std::string m_strF_CREATE_TIME;
 };
 
-//Ìí¼ÓºÃÓÑÏûÏ¢
+//æ·»åŠ å¥½å‹æ¶ˆæ¯
 struct T_ADD_FRIEND_MSG_BEAN {
-	std::string m_strF_MSG_ID;//ÏûÏ¢ID
-	std::string m_strF_USER_ID;//·¢Æğ·½ÓÃ»§±àºÅ
-	std::string m_strF_FRIEND_ID;//½ÓÊÜ·½ÓÃ»§Ãû
-	E_ADD_FRIEND_STATUS m_eF_ADD_FRIEND_STATUS;//Ìí¼Ó×´Ì¬
-	E_FRIEND_OPTION m_eF_FRIEND_OPTION;//Ìí¼ÓÑ¡Ôñ
+	std::string m_strF_MSG_ID;//æ¶ˆæ¯ID
+	std::string m_strF_USER_ID;//å‘èµ·æ–¹ç”¨æˆ·ç¼–å·
+	std::string m_strF_FRIEND_ID;//æ¥å—æ–¹ç”¨æˆ·å
+	E_ADD_FRIEND_STATUS m_eF_ADD_FRIEND_STATUS;//æ·»åŠ çŠ¶æ€
+	E_FRIEND_OPTION m_eF_FRIEND_OPTION;//æ·»åŠ é€‰æ‹©
 };
 
 struct T_USER_TEAM_BEAN {

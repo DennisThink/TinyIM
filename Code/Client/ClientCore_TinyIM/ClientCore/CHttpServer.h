@@ -8,8 +8,9 @@
  * @copyright Copyright (c) 2019
  * 
  */
-#ifndef _DENNIS_THINK_C_HTTP_SERVER_H_
-#define _DENNIS_THINK_C_HTTP_SERVER_H_
+#ifndef _CLIENT_CORE_C_CLIENT_HTTP_SERVER_H_
+#define _CLIENT_CORE_C_CLIENT_HTTP_SERVER_H_
+//#include "CMediumServer.h"
 #include "asio_common.h"
 #include <memory>
 #include <map>
@@ -19,12 +20,14 @@
 using HttpServer = SimpleWeb::Server<SimpleWeb::HTTP>;
 using HTTP_RSP_MAP_PAIR =std::pair<std::string, std::shared_ptr < HttpServer::Response>>;
 using HTTP_RSP_MAP = std::map<std::string, std::shared_ptr<HttpServer::Response>>;
+//using CClientSess_SHARED_PTR = std::shared_ptr<ClientCore::CClientSess>;
 namespace ClientCore {
+
 	class CMediumServer;
-	class CHttpServer : public std::enable_shared_from_this<CHttpServer>
+	class CClientHttpServer : public std::enable_shared_from_this<CClientHttpServer>
 	{
 	public:
-		explicit CHttpServer(asio::io_service& ioService,CMediumServer* pServer) :m_httpServer(ioService),m_pServer(pServer),m_msgIdUtil(2,2) {
+		explicit CClientHttpServer(asio::io_service& ioService,CMediumServer* pServer) :m_httpServer(ioService),m_pServer(pServer),m_msgIdUtil(2,2) {
 
 		}
 
@@ -139,11 +142,10 @@ namespace ClientCore {
 
 		std::string GetHttpParamUserId(std::shared_ptr<HttpServer::Request> request);
 	
-
-		SnowFlake m_msgIdUtil;
-		HttpServer m_httpServer;
+	    HttpServer m_httpServer;
 		CMediumServer* m_pServer;
-		std::map<CClientSess_SHARED_PTR, std::shared_ptr<HttpServer::Response>> m_clientSessResponseMap;
+		SnowFlake m_msgIdUtil;
+		//std::map<CClientSess_SHARED_PTR, std::shared_ptr<HttpServer::Response>> m_clientSessResponseMap;
 		HTTP_RSP_MAP m_httpRspMap;
 
 		std::map<std::string, UserLoginReqMsg> m_userLoginMsgMap;

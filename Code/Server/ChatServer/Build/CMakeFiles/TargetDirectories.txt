@@ -1,0 +1,8 @@
+/home/dennis/DataDisk1/Github/TinyIM/Code/Server/ChatServer/Build/CMakeFiles/edit_cache.dir
+/home/dennis/DataDisk1/Github/TinyIM/Code/Server/ChatServer/Build/CMakeFiles/rebuild_cache.dir
+/home/dennis/DataDisk1/Github/TinyIM/Code/Server/ChatServer/Build/MediumServer/CMakeFiles/ChatServer.dir
+/home/dennis/DataDisk1/Github/TinyIM/Code/Server/ChatServer/Build/MediumServer/CMakeFiles/edit_cache.dir
+/home/dennis/DataDisk1/Github/TinyIM/Code/Server/ChatServer/Build/MediumServer/CMakeFiles/rebuild_cache.dir
+/home/dennis/DataDisk1/Github/TinyIM/Code/Server/ChatServer/Build/ServerTest/CMakeFiles/netServerTest.dir
+/home/dennis/DataDisk1/Github/TinyIM/Code/Server/ChatServer/Build/ServerTest/CMakeFiles/edit_cache.dir
+/home/dennis/DataDisk1/Github/TinyIM/Code/Server/ChatServer/Build/ServerTest/CMakeFiles/rebuild_cache.dir

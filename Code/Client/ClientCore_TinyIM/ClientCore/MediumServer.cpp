@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <memory>
+#include "CHttpServer.h"
 #include "CMediumServer.h"
 #include "DaemonSvcApp.h"
 #include "CServerSess.h"
@@ -125,10 +126,10 @@ int main(int argc, char *argv[])
     }
 	theApp.m_loger=logger;
 	theApp.m_loger->set_level(spdlog::level::debug);
-    MediumServer::CClientSess::ms_loger = theApp.m_loger;
-	MediumServer::CServerSess::ms_loger = theApp.m_loger;
-	MediumServer::CMediumServer::ms_loger = theApp.m_loger;
-	MediumServer::CClientSessManager::ms_loger = theApp.m_loger;
+    ClientCore::CClientSess::ms_loger = theApp.m_loger;
+	ClientCore::CServerSess::ms_loger = theApp.m_loger;
+	ClientCore::CMediumServer::ms_loger = theApp.m_loger;
+	//ChatServer::CClientSessManager::ms_loger = theApp.m_loger;
 
     theApp.list([result](pid_t pid, const std::string &cmdline) {
         printf("\033[30m[%d]\033[32m %s \033[36m", pid, cmdline.c_str());
@@ -146,7 +147,7 @@ int main(int argc, char *argv[])
 
 	LOG_WARN(theApp.m_loger,"Server: {}",g_SERVER_VERSION);
       auto worker=[cfg]()->int{     //后台任务
-        auto server = std::make_shared<MediumServer::CMediumServer>(theApp.m_ioService);
+        auto server = std::make_shared<ClientCore::CMediumServer>(theApp.m_ioService);
         LOG_INFO(theApp.m_loger,"starting Server [ {} {} ]",__FILENAME__,__LINE__);
 
         std::error_code ec;

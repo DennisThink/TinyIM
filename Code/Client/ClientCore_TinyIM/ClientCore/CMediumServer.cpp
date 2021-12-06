@@ -10,6 +10,8 @@
  */
 
 #include "CMediumServer.h"
+#include "CHttpServer.h"
+#include "CClientSess.h"
 #include "json11.hpp"
 #include "DaemonSvcApp.h"
 #include "Msg.h"
@@ -127,11 +129,11 @@ void CMediumServer::start(const std::function<void(const std::error_code &)> &ca
 		do_accept();
 		m_httpServer->Start();
 
-		m_freeClientSess = std::make_shared<CClientSess>(m_ioService,
+		/*m_freeClientSess = std::make_shared<CClientSess>(m_ioService,
 			m_clientCfgVec[0].m_strServerIp,
 			m_clientCfgVec[0].m_nPort, this);
 
-		m_freeClientSess->StartConnect();
+		m_freeClientSess->StartConnect();*/
 		/*{
 			for (auto item : m_clientCfgVec)
 			{
@@ -183,21 +185,21 @@ void CMediumServer::do_accept()
 			   if (!m_clientCfgVec.empty() && !m_clientBinCfgVec.empty())
 			   {
 				   //
-				   auto clientSess = std::make_shared<CClientSess>(m_ioService, 
+				   /*auto clientSess = std::make_shared<CClientSess>(m_ioService, 
 					                                               m_clientCfgVec[0].m_strServerIp, 
 					                                               m_clientCfgVec[0].m_nPort, this);
 
-				   clientSess->StartConnect();
+				   clientSess->StartConnect();*/
 
 
 				   //
-				   auto serverSess = std::make_shared<CServerSess>(std::move(m_socket), this);
-				   serverSess->Start();
+				   //auto serverSess = std::make_shared<CServerSess>(std::move(m_socket), this);
+				   //serverSess->Start();
 
 
 				   //
-				   m_ForwardSessMap.insert(std::pair<CServerSess_SHARED_PTR, CClientSess_SHARED_PTR>(serverSess, clientSess));
-				   m_BackSessMap.insert(std::pair<CClientSess_SHARED_PTR,CServerSess_SHARED_PTR>(clientSess, serverSess));
+				   //m_ForwardSessMap.insert(std::pair<CServerSess_SHARED_PTR, CClientSess_SHARED_PTR>(serverSess, clientSess));
+				   //m_BackSessMap.insert(std::pair<CClientSess_SHARED_PTR,CServerSess_SHARED_PTR>(clientSess, serverSess));
 
 			   }
 			}
@@ -219,14 +221,15 @@ CClientSess_SHARED_PTR CMediumServer::GetClientSess(const std::string strUserNam
 	}
 	else
 	{
-		auto pReturn = m_freeClientSess;
+		/*auto pReturn = m_freeClientSess;
 		m_freeClientSess = std::make_shared<CClientSess>(m_ioService,
 			m_clientCfgVec[0].m_strServerIp,
 			m_clientCfgVec[0].m_nPort, this);
 
 		m_freeClientSess->StartConnect();
 		m_userClientSessMap.insert(std::pair<std::string, CClientSess_SHARED_PTR>(strUserName, pReturn));
-		return pReturn;
+		return pReturn;*/
+		return nullptr;
 	}
 	
 }
@@ -298,8 +301,8 @@ void CMediumServer::SendBack(const std::shared_ptr<CClientSess>& pClientSess,con
 			rspMsg.FromString(msg.to_string());
 			if (rspMsg.m_eErrCode == ERROR_CODE_TYPE::E_CODE_SUCCEED)
 			{
-				pClientSess->SetUserId(rspMsg.m_strUserId);
-				pClientSess->SetUserName(rspMsg.m_strUserName);
+				//pClientSess->SetUserId(rspMsg.m_strUserId);
+				//pClientSess->SetUserName(rspMsg.m_strUserName);
 				m_userStateMap.erase(rspMsg.m_strUserId);
 				m_userStateMap.insert({ rspMsg.m_strUserId,CLIENT_SESS_STATE::SESS_LOGIN_FINISHED });
 			}
@@ -314,14 +317,14 @@ void CMediumServer::SendBack(const std::shared_ptr<CClientSess>& pClientSess,con
 			if (rspMsg.FromString(msg.to_string())) {
 				if (rspMsg.m_eErrCode == ERROR_CODE_TYPE::E_CODE_SUCCEED) {
 					m_userClientSessMap.erase(rspMsg.m_strUserName);
-					m_userStateMap.erase(pClientSess->UserId());
-					m_userStateMap.insert({ pClientSess->UserId(),CLIENT_SESS_STATE::SESS_UN_LOGIN });
+					//m_userStateMap.erase(pClientSess->UserId());
+					//m_userStateMap.insert({ pClientSess->UserId(),CLIENT_SESS_STATE::SESS_UN_LOGIN });
 				}
 			}
 		}
 		if (msg.GetType() == MessageType::NetFailedReport_Type)
 		{
-			auto item = m_userStateMap.find(pClientSess->UserId());
+			/*auto item = m_userStateMap.find(pClientSess->UserId());
 			if (item != m_userStateMap.end())
 			{
 				if (item->second == CLIENT_SESS_STATE::SESS_LOGIN_FINISHED)
@@ -332,13 +335,13 @@ void CMediumServer::SendBack(const std::shared_ptr<CClientSess>& pClientSess,con
 			}
 			m_userClientSessMap.erase(pClientSess->UserName());
 			
-			auto pSess = GetClientSess(pClientSess->UserName());
-			pSess->SetUserId(pClientSess->UserId());
-			pSess->SetUserName(pClientSess->UserName());
+			auto pSess = GetClientSess(pClientSess->UserName());*/
+			//pSess->SetUserId(pClientSess->UserId());
+			//pSess->SetUserName(pClientSess->UserName());
 		}
 		if (msg.GetType() == MessageType::NetRecoverReport_Type)
 		{
-			auto loginReq = m_httpServer->GetUserLoginReq(pClientSess->UserName());
+			/*auto loginReq = m_httpServer->GetUserLoginReq(pClientSess->UserName());
 			auto item = m_userStateMap.find(pClientSess->UserId());
 			if (item != m_userStateMap.end())
 			{
@@ -347,7 +350,7 @@ void CMediumServer::SendBack(const std::shared_ptr<CClientSess>& pClientSess,con
 					auto pSendMsg = std::make_shared<TransBaseMsg_t>(loginReq.GetMsgType(), loginReq.ToString());
 					pClientSess->SendMsg(pSendMsg);
 				}
-			}
+			}*/
 		}
 		OnHttpRsp(pMsg);
 	}
@@ -365,7 +368,7 @@ void CMediumServer::HandleFileVerifyReq(const FileVerifyReqMsg& msg)
 	{
 		rspMsg.m_eErrCode = ERROR_CODE_TYPE::E_CODE_LOGIN_FAILED;
 	}
-	rspMsg.m_strMsgId = msg.m_strMsgId;
+	/*rspMsg.m_strMsgId = msg.m_strMsgId;
 	rspMsg.m_strFileName = msg.m_strFileName;
 	rspMsg.m_strFromId = msg.m_strToId;
 	rspMsg.m_strToId = msg.m_strFromId;
@@ -375,7 +378,7 @@ void CMediumServer::HandleFileVerifyReq(const FileVerifyReqMsg& msg)
 	{
 		auto pSend = std::make_shared<TransBaseMsg_t>(rspMsg.GetMsgType(), rspMsg.ToString());
 		pSess->SendMsg(pSend);
-	}
+	}*/
 
 }
 void CMediumServer::HandleFileDataSendRsp(const FileDataSendRspMsg& rspMsg)
@@ -385,7 +388,7 @@ void CMediumServer::HandleFileDataSendRsp(const FileDataSendRspMsg& rspMsg)
 		FileDataSendReqMsg reqMsg;
 		if (m_fileUtil.OnReadData(rspMsg.m_nFileId, reqMsg.m_szData, reqMsg.m_nDataLength, 1024))
 		{
-			LOG_INFO(ms_loger, "Read Data ", rspMsg.m_nFileId);
+			/*LOG_INFO(ms_loger, "Read Data ", rspMsg.m_nFileId);
 			reqMsg.m_strMsgId = m_httpServer->GenerateMsgId();
 			reqMsg.m_nFileId = rspMsg.m_nFileId;
 			reqMsg.m_strFromId = rspMsg.m_strToId;
@@ -397,12 +400,12 @@ void CMediumServer::HandleFileDataSendRsp(const FileDataSendRspMsg& rspMsg)
 			{
 				auto pSend = std::make_shared<TransBaseMsg_t>(reqMsg.GetMsgType(), reqMsg.ToString());
 				pSess->SendMsg(pSend);
-			}
+			}*/
 		}
 	}
 	else
 	{
-		FileVerifyReqMsg verifyReqMsg;
+		/*FileVerifyReqMsg verifyReqMsg;
 		verifyReqMsg.m_strMsgId = m_httpServer->GenerateMsgId();
 		verifyReqMsg.m_nFileId = rspMsg.m_nFileId;
 		verifyReqMsg.m_strFromId = rspMsg.m_strToId;
@@ -416,7 +419,7 @@ void CMediumServer::HandleFileDataSendRsp(const FileDataSendRspMsg& rspMsg)
 			auto pSend = std::make_shared<TransBaseMsg_t>(verifyReqMsg.GetMsgType(), verifyReqMsg.ToString());
 			pSess->SendMsg(pSend);
 		}
-		m_fileUtil.OnCloseFile(rspMsg.m_nFileId);
+		m_fileUtil.OnCloseFile(rspMsg.m_nFileId);*/
 	}
 }
 
@@ -424,7 +427,7 @@ void CMediumServer::HandleFriendNotifyFileMsgReq(const FriendNotifyFileMsgReqMsg
 {
 	if (notifyMsg.m_eOption == E_FRIEND_OPTION::E_AGREE_ADD)
 	{
-		int nFileId = 15;
+		/*int nFileId = 15;
 		std::string strFileName = "E:\\GitHub\\DennisThinkIM\\源代码\\Client\\ClientCore_TinyIM\\bin\\Debug\\Read.txt";
 		int nFileSize = 0;
 		m_fileUtil.GetFileSize(nFileSize, strFileName);
@@ -445,14 +448,14 @@ void CMediumServer::HandleFriendNotifyFileMsgReq(const FriendNotifyFileMsgReqMsg
 				auto pSend = std::make_shared<TransBaseMsg_t>(sendReqMsg.GetMsgType(), sendReqMsg.ToString());
 				pSess->SendMsg(pSend);
 			}
-		}
+		}*/
 	}
 }
 void CMediumServer::HandleFileDataRecvReq(const FileDataRecvReqMsg& reqMsg)
 {
 	if (reqMsg.m_nDataIndex <= reqMsg.m_nDataTotalCount)
 	{
-		m_fileUtil.OnWriteData(reqMsg.m_nFileId + 1, reqMsg.m_szData, reqMsg.m_nDataLength);
+		/*m_fileUtil.OnWriteData(reqMsg.m_nFileId + 1, reqMsg.m_szData, reqMsg.m_nDataLength);
 		LOG_INFO(ms_loger, "WriteData ", reqMsg.m_nFileId);
 		FileDataRecvRspMsg rspMsg;
 		rspMsg.m_strMsgId = reqMsg.m_strMsgId;
@@ -467,7 +470,7 @@ void CMediumServer::HandleFileDataRecvReq(const FileDataRecvReqMsg& reqMsg)
 		{
 			auto pSend = std::make_shared<TransBaseMsg_t>(rspMsg.GetMsgType(), rspMsg.ToString());
 			pSess->SendMsg(pSend);
-		}
+		}*/
 	}
 }
 /**
@@ -578,7 +581,7 @@ void CMediumServer::OnHttpRsp(std::shared_ptr<TransBaseMsg_t> pMsg)
 			RecvGroupTextMsgReqMsg reqMsg;
 			if (reqMsg.FromString(pMsg->to_string())) {
 				if (m_msgPersisUtil) {
-					m_msgPersisUtil->Save_RecvGroupTextMsgReqMsg(reqMsg);
+					//m_msgPersisUtil->Save_RecvGroupTextMsgReqMsg(reqMsg);
 				}
 			}
 		}break;
@@ -596,7 +599,7 @@ void CMediumServer::OnHttpRsp(std::shared_ptr<TransBaseMsg_t> pMsg)
 			FriendRecvFileMsgReqMsg reqMsg;
 			if (reqMsg.FromString(pMsg->to_string())) {
 				if (m_msgPersisUtil) {
-					m_msgPersisUtil->Save_FriendRecvFileMsgReqMsg(reqMsg);
+					//m_msgPersisUtil->Save_FriendRecvFileMsgReqMsg(reqMsg);
 				}
 			}
 		}break;
@@ -605,7 +608,7 @@ void CMediumServer::OnHttpRsp(std::shared_ptr<TransBaseMsg_t> pMsg)
 			FriendNotifyFileMsgReqMsg reqMsg;
 			if (reqMsg.FromString(pMsg->to_string())) {
 				if (m_msgPersisUtil) {
-					m_msgPersisUtil->Save_FriendNotifyFileMsgReqMsg(reqMsg);
+					//m_msgPersisUtil->Save_FriendNotifyFileMsgReqMsg(reqMsg);
 				}
 				HandleFriendNotifyFileMsgReq(reqMsg);
 			}
@@ -647,7 +650,7 @@ void CMediumServer::OnHttpRsp(std::shared_ptr<TransBaseMsg_t> pMsg)
 			AddFriendRecvReqMsg reqMsg;
 			if (reqMsg.FromString(pMsg->to_string())) {
 				if (m_msgPersisUtil) {
-					m_msgPersisUtil->Save_AddFriendRecvReqMsg(reqMsg);
+					//m_msgPersisUtil->Save_AddFriendRecvReqMsg(reqMsg);
 				}
 			}
 		}break;
@@ -665,7 +668,7 @@ void CMediumServer::OnHttpRsp(std::shared_ptr<TransBaseMsg_t> pMsg)
 			AddFriendNotifyReqMsg reqMsg;
 			if (reqMsg.FromString(pMsg->to_string())) {
 				if (m_msgPersisUtil) {
-					m_msgPersisUtil->Save_AddFriendNotifyReqMsg(reqMsg);
+					//m_msgPersisUtil->Save_AddFriendNotifyReqMsg(reqMsg);
 				}
 			}
 		}break;
@@ -674,10 +677,10 @@ void CMediumServer::OnHttpRsp(std::shared_ptr<TransBaseMsg_t> pMsg)
 			FriendChatRecvTxtReqMsg reqMsg;
 			if (reqMsg.FromString(pMsg->to_string())) {
 				if (m_msgPersisUtil) {
-					m_msgPersisUtil->Save_FriendChatRecvTxtReqMsg(reqMsg);
+					//m_msgPersisUtil->Save_FriendChatRecvTxtReqMsg(reqMsg);
 				}
 				{
-					FriendChatRecvTxtRspMsg rspMsg;
+					/*FriendChatRecvTxtRspMsg rspMsg;
 					rspMsg.m_strFromId = reqMsg.m_strFromId;
 					rspMsg.m_strToId = reqMsg.m_strToId;
 					rspMsg.m_strMsgId = reqMsg.m_strMsgId;
@@ -686,7 +689,7 @@ void CMediumServer::OnHttpRsp(std::shared_ptr<TransBaseMsg_t> pMsg)
 					{
 						auto pSend = std::make_shared<TransBaseMsg_t>(rspMsg.GetMsgType(), rspMsg.ToString());
 						pSess->SendMsg(pSend);
-					}
+					}*/
 				}
 			}
 
@@ -695,7 +698,7 @@ void CMediumServer::OnHttpRsp(std::shared_ptr<TransBaseMsg_t> pMsg)
 		{
 			FriendUnReadNotifyReqMsg reqMsg;
 			if (reqMsg.FromString(pMsg->to_string())) {
-				FriendUnReadNotifyRspMsg rspMsg;
+				/*FriendUnReadNotifyRspMsg rspMsg;
 				rspMsg.m_strMsgId = reqMsg.m_strMsgId;
 				rspMsg.m_strUserId = reqMsg.m_strUserId;
 				auto pSess = GetClientSess(rspMsg.m_strUserId);
@@ -703,7 +706,7 @@ void CMediumServer::OnHttpRsp(std::shared_ptr<TransBaseMsg_t> pMsg)
 				{
 					auto pSend = std::make_shared<TransBaseMsg_t>(rspMsg.GetMsgType(), rspMsg.ToString());
 					pSess->SendMsg(pSend);
-				}
+				}*/
 			}
 
 		}break;
@@ -738,12 +741,12 @@ void CMediumServer::Handle_RecvFileOnlineRsp(const FriendRecvFileMsgRspMsg& rspM
 void CMediumServer::SendFoward(const std::shared_ptr<CServerSess>& pServerSess,const TransBaseMsg_t& msg)
 {
 	//对于原始消息，原封不动的转发
-	auto item = m_ForwardSessMap.find(pServerSess);
+	/*auto item = m_ForwardSessMap.find(pServerSess);
 	if (item != m_ForwardSessMap.end())
 	{
 		auto pMsg = std::make_shared<TransBaseMsg_t>(msg.GetType(), msg.to_string());
 		item->second->SendMsg(pMsg);
-	}
+	}*/
 }
 
 }

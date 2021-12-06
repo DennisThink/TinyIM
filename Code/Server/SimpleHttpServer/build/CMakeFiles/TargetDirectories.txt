@@ -1,0 +1,3 @@
+/home/dennis/DataDisk1/Github/TinyIM/Code/Server/SimpleHttpServer/build/CMakeFiles/HttpServer.dir
+/home/dennis/DataDisk1/Github/TinyIM/Code/Server/SimpleHttpServer/build/CMakeFiles/edit_cache.dir
+/home/dennis/DataDisk1/Github/TinyIM/Code/Server/SimpleHttpServer/build/CMakeFiles/rebuild_cache.dir

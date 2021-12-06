@@ -20,15 +20,15 @@ link_libraries(zlib)
 if(APPLE)
     include_directories(${PROJECT_SOURCE_DIR} "/usr/local/include" "/usr/local/ssl/include")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
+    #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
     link_directories(/usr/local/lib)
 elseif(WIN32)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 ")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W3 /WX")
+    #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W3 /WX")
 else()
     include_directories(${PROJECT_SOURCE_DIR} "/usr/local/include")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -static-libgcc -static-libstdc++")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
+    #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
 endif()
 
 if(WIN32)
@@ -37,7 +37,7 @@ link_libraries(pthread)
 endif()
 set(SERVER_FILES 
 		MediumServer.cpp
-		CServerSess.h CServerSess.cpp
+		#CServerSess.h CServerSess.cpp
         CMediumServer.h CMediumServer.cpp 
         ../../../msgStruct/json11/json11.cpp
         CClientSess.h CClientSess.cpp

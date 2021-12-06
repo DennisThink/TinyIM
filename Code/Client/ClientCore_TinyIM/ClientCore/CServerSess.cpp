@@ -1,5 +1,6 @@
 ﻿#include "CClientSess.h"
-namespace ChatServer
+#include "CMediumServer.h"
+namespace ClientCore
 {
 std::shared_ptr<spdlog::logger> CServerSess::ms_loger;
 
@@ -77,7 +78,7 @@ void CServerSess::handle_message(const TransBaseMsg_t *hdr)
 	{
 		UserLoginReqMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleUserLoginReq(shared_from_this(),msg);
+			//m_server->HandleUserLoginReq(shared_from_this(),msg);
 		}
 		else {
 
@@ -86,28 +87,28 @@ void CServerSess::handle_message(const TransBaseMsg_t *hdr)
 	case MessageType::UserLogoutReq_Type: {
 		UserLogoutReqMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleUserLogoutReq(shared_from_this(), msg);
+			//m_server->HandleUserLogoutReq(shared_from_this(), msg);
 		}
 	}break;
 	case MessageType::UserRegisterReq_Type:
 	{
 		UserRegisterReqMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleUserRegisterReq(shared_from_this(),msg);
+			//m_server->HandleUserRegisterReq(shared_from_this(),msg);
 		}
 	}break;
 	case MessageType::UserUnRegisterReq_Type:
 	{
 		UserUnRegisterReqMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleUserUnRegisterReq(shared_from_this(), msg);
+			//m_server->HandleUserUnRegisterReq(shared_from_this(), msg);
 		}
 	}break;
 	case MessageType::FriendChatSendTxtMsgReq_Type:
 	{
 		FriendChatSendTxtReqMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleFrientChatSendTxtReq(shared_from_this(), msg);
+			//m_server->HandleFrientChatSendTxtReq(shared_from_this(), msg);
 		}
 	}break;
 
@@ -115,110 +116,110 @@ void CServerSess::handle_message(const TransBaseMsg_t *hdr)
 	{
 		FriendChatRecvTxtRspMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleFriendChatRecvMsgRsp(shared_from_this(), msg);
+			//m_server->HandleFriendChatRecvMsgRsp(shared_from_this(), msg);
 		}
 	}break;
 	case MessageType::GetFriendListReq_Type:
 	{
 		GetFriendListReqMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleGetFriendListReq(shared_from_this(),msg);
+			//m_server->HandleGetFriendListReq(shared_from_this(),msg);
 		}
 	}break;
 	case MessageType::FindFriendReq_Type:
 	{
 		FindFriendReqMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleFindFriendReq(shared_from_this(), msg);
+			//m_server->HandleFindFriendReq(shared_from_this(), msg);
 		}
 	}break;
 	case MessageType::AddFriendSendReq_Type:
 	{
 		AddFriendSendReqMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleAddFriendReq(shared_from_this(),msg);
+			//m_server->HandleAddFriendReq(shared_from_this(),msg);
 		}
 	}break;
 	case MessageType::AddFriendRecvRsp_Type:
 	{
 		AddFriendRecvRspMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleAddFriendRecvRsp(shared_from_this(), msg);
+			//m_server->HandleAddFriendRecvRsp(shared_from_this(), msg);
 		}
 	}break;
 	case MessageType::AddFriendNotifyRsp_Type:
 	{
 		AddFriendNotifyRspMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleAddFriendNotifyRsp(shared_from_this(), msg);
+			//m_server->HandleAddFriendNotifyRsp(shared_from_this(), msg);
 		}
 	}break;
 	case MessageType::RemoveFriendReq_Type:
 	{
 		RemoveFriendReqMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleRemoveFriendReq(shared_from_this(), msg);
+			//m_server->HandleRemoveFriendReq(shared_from_this(), msg);
 		}
 	}break;
 	case MessageType::AddTeamReq_Type:
 	{
 		AddTeamReqMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleAddTeamReq(shared_from_this(), msg);
+			//m_server->HandleAddTeamReq(shared_from_this(), msg);
 		}
 	}break;
 	case MessageType::RemoveTeamReq_Type:
 	{
 		RemoveTeamReqMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleRemoveTeamReq(shared_from_this(), msg);
+			//m_server->HandleRemoveTeamReq(shared_from_this(), msg);
 		}
 	}break;
 	case MessageType::MoveFriendToTeamReq_Type: {
 		MoveFriendToTeamReqMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleMoveFriendToTeamReq(shared_from_this(), msg);
+			//m_server->HandleMoveFriendToTeamReq(shared_from_this(), msg);
 		}
 	}break;
 	case MessageType::CreateGroupReq_Type:
 	{
 		CreateGroupReqMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleCreateGroupReq(shared_from_this(),msg);
+			//m_server->HandleCreateGroupReq(shared_from_this(),msg);
 		}
 	}break;
 	case MessageType::DestroyGroupReq_Type:
 	{
 		DestroyGroupReqMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleDestroyGroupReq(shared_from_this(), msg);
+			//m_server->HandleDestroyGroupReq(shared_from_this(), msg);
 		}
 	}break;
 	case MessageType::FindGroupReq_Type:
 	{
 		FindGroupReqMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleFindGroupReq(shared_from_this(), msg);
+			//m_server->HandleFindGroupReq(shared_from_this(), msg);
 		}
 	}break;
 	case MessageType::GetGroupListReq_Type:
 	{
 		GetGroupListReqMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleGetGroupListReq(shared_from_this(),msg);
+			//m_server->HandleGetGroupListReq(shared_from_this(),msg);
 		}
 	}break;
 	case MessageType::SendGroupTextMsgReq_Type:
 	{
 		SendGroupTextMsgReqMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleSendGroupTextReq(shared_from_this(), msg);
+			//m_server->HandleSendGroupTextReq(shared_from_this(), msg);
 		}
 	}break;
 	case MessageType::AddToGroupReq_Type: {
 		AddToGroupReqMsg msg;
 		if (msg.FromString(hdr->to_string())) {
-			m_server->HandleAddToGroupReq(shared_from_this(), msg);
+			//m_server->HandleAddToGroupReq(shared_from_this(), msg);
 		}
 	}break;
 	case MessageType::RecvGroupTextMsgRsp_Type:

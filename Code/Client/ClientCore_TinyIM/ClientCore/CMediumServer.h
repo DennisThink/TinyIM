@@ -15,6 +15,7 @@
 #include <functional>
 
 #include <map>
+#include <memory>
 
 #include "CommonMsg.h"
 #include "Log.h"
@@ -23,7 +24,7 @@
 
 #include "CClientSess.h"
 #include "CServerSess.h"
-#include "CHttpServer.h"
+//#include "CHttpServer.h"
 #include "planform.h"
 #include "CMsgPersistentUtil.h"
 #include "CFileUtil.h"
@@ -31,6 +32,9 @@ namespace ClientCore
 {
 using tcp = asio::ip::tcp;
 class CClientSess;
+class CClientHttpServer;
+using CClientSess_SHARED_PTR=std::shared_ptr<CClientSess>;
+
 class CMediumServer : public std::enable_shared_from_this<CMediumServer>
 {
   protected:
@@ -49,16 +53,16 @@ class CMediumServer : public std::enable_shared_from_this<CMediumServer>
 
 	std::vector<IpPortCfg> m_clientBinCfgVec;
 
-    std::vector<std::shared_ptr<CServerSess>> m_listenList; //监听的套接字的列表
+    std::vector<std::shared_ptr<ClientCore::CServerSess>> m_listenList; //监听的套接字的列表
 
-	std::map<std::shared_ptr<CServerSess>, std::shared_ptr<CClientSess>> m_ForwardSessMap;
-	std::map<std::shared_ptr<CClientSess>, std::shared_ptr<CServerSess>> m_BackSessMap;
+	std::map<std::shared_ptr<ClientCore::CServerSess>, std::shared_ptr<ClientCore::CClientSess>> m_ForwardSessMap;
+	std::map<std::shared_ptr<ClientCore::CClientSess>, std::shared_ptr<ClientCore::CServerSess>> m_BackSessMap;
 
 	std::map<std::string, std::shared_ptr<CClientSess>> m_userClientSessMap;
 
     std::shared_ptr<asio::high_resolution_timer> m_timer = nullptr;
 
-	std::shared_ptr<CHttpServer> m_httpServer;
+	std::shared_ptr<ClientCore::CClientHttpServer> m_httpServer;
 	CClientSess_SHARED_PTR m_freeClientSess;
 	CMsgPersistentUtil_SHARED_PTR m_msgPersisUtil;
     void SetTimer(int nSeconds);
@@ -75,13 +79,14 @@ class CMediumServer : public std::enable_shared_from_this<CMediumServer>
 
 	void HandleFileVerifyReq(const FileVerifyReqMsg& msg);
 	void HandleFriendNotifyFileMsgReq(const FriendNotifyFileMsgReqMsg& reqMsg);
+    //void HandleUserLoginReq();
   public:
     static std::shared_ptr<spdlog::logger> ms_loger;
     inline IpPortCfg &config() { return m_serverCfg; }
 
 
-    void SendBack(const std::shared_ptr<CClientSess>& pClientSess,const TransBaseMsg_t& msg);
-	void SendFoward(const std::shared_ptr<CServerSess>& pServerSess,const TransBaseMsg_t& msg);
+    void SendBack(const std::shared_ptr<ClientCore::CClientSess>& pClientSess,const TransBaseMsg_t& msg);
+	void SendFoward(const std::shared_ptr<ClientCore::CServerSess>& pServerSess,const TransBaseMsg_t& msg);
 
 	void Handle_RecvFileOnlineRsp(const FriendRecvFileMsgRspMsg& rspMsg);
     void CheckAllConnect();
@@ -97,7 +102,7 @@ class CMediumServer : public std::enable_shared_from_this<CMediumServer>
         {
             m_timer = std::make_shared<asio::high_resolution_timer>(m_ioService);
         }
-		m_httpServer = std::make_shared<CHttpServer>(m_ioService,this);
+		//m_httpServer = std::make_shared<ClientCore::CHttpServer>(m_ioService,this);
 		m_msgPersisUtil = std::make_shared<CMsgPersistentUtil>();
 		m_msgPersisUtil->InitDataBase();
     }

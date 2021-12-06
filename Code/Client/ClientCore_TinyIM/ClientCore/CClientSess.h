@@ -9,13 +9,13 @@
  * 
  */
 
-#ifndef _MEDIUM_SERVER_C_CLIENT_SESS_H_
-#define _MEDIUM_SERVER_C_CLIENT_SESS_H_
+#ifndef _CLIENT_CORE_C_CLIENT_SESS_H_
+#define _CLIENT_CORE_C_CLIENT_SESS_H_
 #include "asio_common.h"
 #include "Log.h"
 #include "CMediumServer.h"
 #include "CommonMsg.h"
-namespace ChatServer
+namespace ClientCore
 {
 using asio::ip::tcp;
 class CClientSessManager;
@@ -70,8 +70,8 @@ public:
 	
 	
 
-    CClientSess(asio::io_service& ioService,std::string& strIp,int port,CClientSessManager* queue);
-
+    //CClientSess(asio::io_service& ioService,std::string& strIp,int port,CClientSessManager* queue);
+    CClientSess(asio::io_service& ioService,std::string& strIp,int port);
     int StartConnect();
     int StopConnect();
 	bool IsConnect(){return m_bConnect == ST_CONN_FINISHED;}
