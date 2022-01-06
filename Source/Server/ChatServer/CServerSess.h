@@ -27,7 +27,7 @@ static std::string StringToHex(const char * data,const std::size_t length)
 }
 
 using tcp=asio::ip::tcp;
-namespace ChatServer
+namespace TinyIMServer
 {
 class CChatServer;
 /**

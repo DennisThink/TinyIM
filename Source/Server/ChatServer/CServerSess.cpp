@@ -1,5 +1,5 @@
 ﻿#include "CClientSess.h"
-namespace ChatServer
+namespace TinyIMServer
 {
 std::shared_ptr<spdlog::logger> CServerSess::ms_loger;
 

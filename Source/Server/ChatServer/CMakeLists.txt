@@ -38,10 +38,10 @@ else()
     link_libraries(pthread)
 endif()
 set(SERVER_FILES
-    MediumServer.cpp
+    ServerMain.cpp
     CServerSess.h CServerSess.cpp
     CClientSessManager.h CClientSessManager.cpp
-    CMediumServer.h CMediumServer.cpp
+    ChatServer.h ChatServer.cpp
     ../../../include/thirdparty/json11/json11.cpp
     CClientSess.h CClientSess.cpp
     ../../../include/DaemonApp/DaemonSvcApp.h

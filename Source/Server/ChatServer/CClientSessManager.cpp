@@ -1,7 +1,7 @@
 ﻿#include "CClientSessManager.h"
 #include "CClientSess.h"
 #include <algorithm>
-namespace ChatServer
+namespace TinyIMServer
 {
 std::shared_ptr<spdlog::logger> CClientSessManager::ms_loger;
 

@@ -13,9 +13,9 @@
 #define _MEDIUM_SERVER_C_CLIENT_SESS_H_
 #include "asio_common.h"
 #include "Log.h"
-#include "CMediumServer.h"
+#include "ChatServer.h"
 #include "CommonMsg.h"
-namespace ChatServer
+namespace TinyIMServer
 {
 using asio::ip::tcp;
 class CClientSessManager;

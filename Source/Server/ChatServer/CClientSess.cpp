@@ -9,11 +9,11 @@
  * 
  */
 #include "CClientSess.h"
-#include "CMediumServer.h"
+#include "ChatServer.h"
 #include "asio.hpp"
 #include "json11.hpp"
 #include <iostream>
-namespace ChatServer
+namespace TinyIMServer
 {
 std::shared_ptr<spdlog::logger> CClientSess::ms_loger;
 

@@ -12,7 +12,7 @@
 #include "CommonMsg.h"
 #include <vector>
 #include <map>
-namespace ChatServer
+namespace TinyIMServer
 {
 
 class CClientSess;
