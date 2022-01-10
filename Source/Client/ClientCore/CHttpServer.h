@@ -17,6 +17,7 @@
 #include "server_http.hpp"
 #include "CClientSess.h"
 #include "SnowFlake.h"
+#include "Log.h"
 using HttpServer = SimpleWeb::Server<SimpleWeb::HTTP>;
 using HTTP_RSP_MAP_PAIR =std::pair<std::string, std::shared_ptr < HttpServer::Response>>;
 using HTTP_RSP_MAP = std::map<std::string, std::shared_ptr<HttpServer::Response>>;
@@ -28,7 +29,6 @@ namespace ClientCore {
 	{
 	public:
 		explicit CClientHttpServer(asio::io_service& ioService,CMediumServer* pServer) :m_httpServer(ioService),m_pServer(pServer),m_msgIdUtil(2,2) {
-
 		}
 
 		void Start()

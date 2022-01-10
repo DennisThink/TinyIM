@@ -40,7 +40,7 @@ void CMediumServer::loadConfig(const json11::Json &cfg, std::error_code& ec)
         return;
     }
 
-	{
+	/*{
 		auto clientsCfg = cfg["clients"];
 		if (!clientsCfg.is_array())
 		{
@@ -55,24 +55,19 @@ void CMediumServer::loadConfig(const json11::Json &cfg, std::error_code& ec)
 			LOG_INFO(ms_loger, "Client Config: {}", clientCfg.to_string());
 			m_clientCfgVec.push_back(clientCfg);
 		}
-	}
+	}*/
 
 	{
+	    auto serverCfg = cfg["http"];
+		LOG_INFO(ms_loger,"loadConfig");
+		ec.clear();
+		m_HttpCfg.m_strServerIp=serverCfg["ip"].string_value();
+		m_HttpCfg.m_nPort=(uint16_t)serverCfg["port"].int_value();
+		LOG_INFO(ms_loger,"ServerIp: {}",m_HttpCfg.to_string());
+		if(!m_HttpCfg.Valid())
 		{
-			auto clientsCfg = cfg["clientsBin"];
-			if (!clientsCfg.is_array())
-			{
-				LOG_ERR(ms_loger, "Clients Config Error {}", cfg.string_value());
-				return;
-			}
-			for (auto item : clientsCfg.array_items())
-			{
-				IpPortCfg clientCfg;
-				clientCfg.m_strServerIp = item["ip"].string_value();
-				clientCfg.m_nPort = item["port"].int_value();
-				LOG_INFO(ms_loger, "Client Config: {}", clientCfg.to_string());
-				m_clientBinCfgVec.push_back(clientCfg);
-			}
+			LOG_ERR(ms_loger,"Config Error {}",m_HttpCfg.to_string());
+			return;
 		}
 	}
 }
@@ -83,7 +78,7 @@ void CMediumServer::loadConfig(const json11::Json &cfg, std::error_code& ec)
  * 
  * @param callback 
  */
-void CMediumServer::start(const std::function<void(const std::error_code &)> &callback)
+void CMediumServer::start(const std::function<void(const std::error_code&)> &callback)
 {
 	if (!m_serverCfg.Valid())
 	{
@@ -91,7 +86,7 @@ void CMediumServer::start(const std::function<void(const std::error_code &)> &ca
 		return;
 	}
 	LOG_INFO(ms_loger, "Server Start Service");
-	std::error_code ec;
+
 	asio::ip::tcp::endpoint endpoint;
 	if (m_serverCfg.m_strServerIp.length() > 0)
 	{
@@ -104,16 +99,30 @@ void CMediumServer::start(const std::function<void(const std::error_code &)> &ca
 		endpoint =
 			asio::ip::tcp::endpoint(asio::ip::tcp::v4(), m_serverCfg.m_nPort);
 	}
-	LOG_WARN(ms_loger, "Before Open [ {} {} ]",__FILENAME__,__LINE__);
+	/*LOG_WARN(ms_loger, "Before Open [ {} {} ]",__FILENAME__,__LINE__);
 	m_acceptor.open(endpoint.protocol());
 	LOG_WARN(ms_loger, "Before Set Option [ {} {} ]", __FILENAME__, __LINE__);
 	m_acceptor.set_option(asio::socket_base::reuse_address(true));
 	LOG_WARN(ms_loger, "Before Bind [ {} {} ]", __FILENAME__, __LINE__);
 	m_acceptor.bind(endpoint, ec);
-	LOG_WARN(ms_loger, "Before Listen [ {} {} ]", __FILENAME__, __LINE__);
-	if (!ec)
+	LOG_WARN(ms_loger, "Before Listen [ {} {} ]", __FILENAME__, __LINE__);*/
+	std::error_code ec;
+	ec.clear();
+	if (1)
 	{
-		LOG_WARN(ms_loger, "Bind To {} Succeed [{} {}]", m_serverCfg.to_string(),__FILENAME__,__LINE__);
+		SetTimer(5);
+		LOG_INFO(ms_loger,"SET TIMER");
+		if(m_httpServer)
+		{
+			m_httpServer->Start();
+		}
+		else {
+			m_httpServer = std::make_shared<ClientCore::CClientHttpServer>(m_ioService,this);
+			m_httpServer->Start();
+		LOG_ERR(ms_loger,"SET TIMER No http server");
+		}
+
+		/*LOG_WARN(ms_loger, "Bind To {} Succeed [{} {}]", m_serverCfg.to_string(),__FILENAME__,__LINE__);
 		m_acceptor.listen(asio::socket_base::max_connections, ec);
 		if (!ec)
 		{
@@ -124,15 +133,15 @@ void CMediumServer::start(const std::function<void(const std::error_code &)> &ca
 			LOG_WARN(ms_loger, "Listen To {} Failed, Reason:{} {} [{} {}]",
 				m_serverCfg.to_string(), ec.value(), ec.message(), __FILENAME__, __LINE__);
 		}
-		SetTimer(5);
-		do_accept();
-		m_httpServer->Start();
 
-		/*m_freeClientSess = std::make_shared<CClientSess>(m_ioService,
-			m_clientCfgVec[0].m_strServerIp,
-			m_clientCfgVec[0].m_nPort, this);
+		do_accept();*/
 
-		m_freeClientSess->StartConnect();*/
+
+		m_freeClientSess = std::make_shared<CClientSess>(m_ioService,
+			m_serverCfg.m_strServerIp,
+			m_serverCfg.m_nPort, this);
+
+		m_freeClientSess->StartConnect();
 		/*{
 			for (auto item : m_clientCfgVec)
 			{
@@ -151,9 +160,6 @@ void CMediumServer::start(const std::function<void(const std::error_code &)> &ca
 	{
 		LOG_WARN(ms_loger, "Bind To {} Failed [{} {}]", m_serverCfg.to_string(), __FILENAME__, __LINE__);
 		callback(ec);
-#ifndef WIN32
-		exit(BIND_FAILED_EXIT);
-#endif
 	}
 }
 /**
@@ -181,14 +187,14 @@ void CMediumServer::do_accept()
 			   LOG_INFO(ms_loger,"Server accept Successed [{} {}]",__FILENAME__, __LINE__);
                
 
-			   if (!m_clientCfgVec.empty() && !m_clientBinCfgVec.empty())
+			   /*if (!m_clientCfgVec.empty() && !m_clientBinCfgVec.empty())
 			   {
 				   //
-				   /*auto clientSess = std::make_shared<CClientSess>(m_ioService, 
+				   auto clientSess = std::make_shared<CClientSess>(m_ioService, 
 					                                               m_clientCfgVec[0].m_strServerIp, 
 					                                               m_clientCfgVec[0].m_nPort, this);
 
-				   clientSess->StartConnect();*/
+				   clientSess->StartConnect();
 
 
 				   //
@@ -200,7 +206,7 @@ void CMediumServer::do_accept()
 				   //m_ForwardSessMap.insert(std::pair<CServerSess_SHARED_PTR, CClientSess_SHARED_PTR>(serverSess, clientSess));
 				   //m_BackSessMap.insert(std::pair<CClientSess_SHARED_PTR,CServerSess_SHARED_PTR>(clientSess, serverSess));
 
-			   }
+			   }*/
 			}
             do_accept();
         });

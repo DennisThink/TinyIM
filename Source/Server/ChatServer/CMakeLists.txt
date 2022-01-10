@@ -54,4 +54,4 @@ set(SERVER_FILES
     EncodingUtil.cpp
     )
 add_executable(ChatServer ${SERVER_FILES})
-SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../bin)
+set(EXECUTABLE_OUTPUT_PATH ${BUILD_BIN_DIR})

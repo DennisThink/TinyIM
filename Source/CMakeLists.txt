@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
 project(TinyIM)
+SET(BUILD_BIN_DIR "/home/dennis/DataDisk1/Github/TinyIM/Source/Bin/")
 add_subdirectory(Client)
 add_subdirectory(Server)

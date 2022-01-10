@@ -40,4 +40,4 @@ set(SERVER_FILES main.cpp
 #  ../include/thirdparty/json11/json11.cpp)
 add_executable(HttpTest ${SERVER_FILES})
 #add_executable(FmtLearn ${LEARN_SERVER_FILES})
-SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../bin) 
+set(EXECUTABLE_OUTPUT_PATH ${BUILD_BIN_DIR})

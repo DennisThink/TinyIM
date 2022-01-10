@@ -129,6 +129,7 @@ int main(int argc, char *argv[])
     ClientCore::CClientSess::ms_loger = theApp.m_loger;
 	//ClientCore::CServerSess::ms_loger = theApp.m_loger;
 	ClientCore::CMediumServer::ms_loger = theApp.m_loger;
+    ClientCore::CClientHttpServer::ms_loger = theApp.m_loger;
 	//ChatServer::CClientSessManager::ms_loger = theApp.m_loger;
 
     theApp.list([result](pid_t pid, const std::string &cmdline) {
@@ -177,7 +178,9 @@ int main(int argc, char *argv[])
         theApp.m_ioService.run();
         return 0;
     };
+    //worker();
     if(result.m_cmd == ServerCmd::CMD_START){
+        LOG_INFO(theApp.m_loger,"starting Server2");
         auto rstm=time(nullptr)+10;  //最快10秒启动一次，防止意外条件下频繁重启
         theApp.on_worker_exit([&rstm](int status){
            //TODO: 检查子进程退出的原因，有些情况下是不需要重启的	

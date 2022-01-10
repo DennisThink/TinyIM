@@ -49,9 +49,9 @@ class CMediumServer : public std::enable_shared_from_this<CMediumServer>
 
 	CFileUtil m_fileUtil;
     //所有的客户端的连接客户端的IP端口设置
-    std::vector<IpPortCfg> m_clientCfgVec;
+    //std::vector<IpPortCfg> m_clientCfgVec;
 
-	std::vector<IpPortCfg> m_clientBinCfgVec;
+	IpPortCfg m_HttpCfg;
 
     std::vector<std::shared_ptr<ClientCore::CServerSess>> m_listenList; //监听的套接字的列表
 

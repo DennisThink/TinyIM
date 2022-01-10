@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
 
 
 	LOG_WARN(theApp.m_loger,"Server: {}",g_SERVER_VERSION);
-      auto worker=[cfg]()->int{     //后台任务
+     auto worker=[cfg]()->int{     //后台任务
         auto server = std::make_shared<TinyIMServer::CChatServer>(theApp.m_ioService);
         LOG_INFO(theApp.m_loger,"starting Server");
 
@@ -167,10 +167,12 @@ int main(int argc, char *argv[])
         }
         theApp.m_ioService.run();
         return 0;
-    };
+     };
     if(result.m_cmd == ServerCmd::CMD_START){
         auto rstm=time(nullptr)+10;  //最快10秒启动一次，防止意外条件下频繁重启
+        LOG_INFO(theApp.m_loger," Before {} {}",__FILE__,__LINE__);
         theApp.on_worker_exit([&rstm](int status){
+            LOG_INFO(theApp.m_loger," Before {} {}",__FILE__,__LINE__);
            //TODO: 检查子进程退出的原因，有些情况下是不需要重启的	
 			if(BIND_FAILED_EXIT == (status>>8) && (0 == (status&0xff)))
 			{

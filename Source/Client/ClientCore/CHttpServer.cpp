@@ -898,23 +898,28 @@ namespace ClientCore
 		auto pSelf = shared_from_this();
 		
 		m_httpServer.resource["/version"]["GET"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"GET /version");
 			this->Get_Version(response, request);
 		};
 
 		//User Begin
 		m_httpServer.resource["/register_user"]["POST"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /register_user");
 			this->Post_RegisterUser(response, request);
 		};
 
 		m_httpServer.resource["/un_register_user"]["POST"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /un_register_user");
 			this->Post_UnRegisterUser(response, request);
 		};
 
 		m_httpServer.resource["/user_login"]["POST"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /user_login");
 			this->Post_UserLogin(response, request);
 		};
 
 		m_httpServer.resource["/user_logout"]["POST"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /user_logout");
 			this->Post_UserLogout(response, request);
 		};
 
@@ -923,91 +928,112 @@ namespace ClientCore
 
 		//Friend Begin
 		m_httpServer.resource["/find_friend"]["POST"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /find_friend");
 			this->Post_FindFriendReq(response, request);
 		};
 
 		m_httpServer.resource["/add_friend_req"]["POST"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /add_friend_req");
 			this->Post_AddFriendReq(response, request);
 		};
 
 		m_httpServer.resource["/get_add_friend_require"]["GET"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /get_add_friend_require");
 			this->Get_RecvAddFriendReq(response, request);
 		};
 
 		m_httpServer.resource["/on_add_friend_require"]["POST"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /on_add_friend_require");
 			this->Post_RecvAddFriendRsp(response, request);
 		};
 
 		m_httpServer.resource["/get_add_friend_notify"]["GET"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /get_add_friend_notify");
 			this->Get_AddFriendNotify(response, request);
 		};
 
 		m_httpServer.resource["/remove_friend"]["POST"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /remove_friend");
 			this->Post_RemoveFriend(response, request);
 		};
 
 		m_httpServer.resource["/send_friend_chat_text_msg"]["POST"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /send_friend_chat_text_msg");
 			this->Post_FriendChatSendTxt(response, request);
 		};
 
 		m_httpServer.resource["/get_friend_chat_recv_text_msg"]["GET"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /get_friend_chat_recv_text_msg");
 			this->Get_FriendChatRecvTxtReq(response, request);
 		};
 
 		m_httpServer.resource["/on_friend_chat_recv_text_msg"]["POST"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /on_friend_chat_recv_text_msg");
 			this->Post_FriendChatRecvTxtRsp(response, request);
 		};
 
 		//File相关
 		m_httpServer.resource["/send_file_online_to_friend_req"]["POST"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /send_file_online_to_friend_req");
 			this->Post_SendFileOnlineReq(response, request);
 		};
 
 
 		m_httpServer.resource["/recv_file_online_from_friend_req"]["GET"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /recv_file_online_from_friend_req");
 			this->Get_RecvFileOnlineReq(response, request);
 		};
 
 		m_httpServer.resource["/on_recv_file_online_from_friend_rsp"]["POST"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /on_recv_file_online_from_friend_rsp");
 			this->Post_RecvFileOnlineRsp(response, request);
 		};
 
 
 		m_httpServer.resource["/send_file_online_to_friend_notify"]["GET"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /send_file_online_to_friend_notify");
 			this->Get_SendFileOnlineNotifyReq(response, request);
 		};
 
 		m_httpServer.resource["/on_send_file_online_to_friend_rsp_notify"]["POST"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /on_send_file_online_to_friend_rsp_notify");
 			this->Post_SendFileOnlineNotifyRsp(response, request);
 		};
 		//Friend End
 
 		//GroupBegin 
 		m_httpServer.resource["/find_group"]["POST"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /find_group");
 			this->Post_FindGroupReq(response, request);
 		};
 
 		m_httpServer.resource["/add_to_group"]["POST"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /add_to_group");
 			this->Post_SendAddToGroupReq(response, request);
 		};
 
 		m_httpServer.resource["/create_group"]["POST"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /create_group");
 			this->Post_CreateGroupReq(response, request);
 		};
 
 		m_httpServer.resource["/destroy_group"]["POST"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /destroy_group");
 			this->Post_DestroyGroupReq(response, request);
 		};
 
 		m_httpServer.resource["/send_group_text_msg"]["POST"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /send_group_text_msg");
 			this->Post_SendGroupTextMsg(response, request);
 		};
 
 		m_httpServer.resource["/get_recv_group_text_msg"]["GET"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /get_recv_group_text_msg");
 			this->Get_RecvGroupTextMsgReq(response, request);
 		};
 
 		m_httpServer.resource["/on_recv_group_text_msg"]["POST"] = [pSelf, this](std::shared_ptr<HttpServer::Response> response, std::shared_ptr<HttpServer::Request> request) {
+			LOG_INFO(this->ms_loger,"POST /on_recv_group_text_msg");
 			this->Post_RecvGroupTextMsgRsp(response, request);
 		};
 
