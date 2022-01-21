@@ -253,7 +253,7 @@ private:
                 LOG_WARN(ms_loger, "Listen To {} Failed, Reason:{} {} [{} {}]",
                      m_serverCfg.to_string(), ec.value(), ec.message(),__FILENAME__, __LINE__);
             }
-            SetTimer(3);
+            SetTimer(5);
             do_accept();
             if(0)
 			{
